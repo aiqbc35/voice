@@ -56,8 +56,8 @@ class Voice
         }
 
         if (is_array($voice)) {
-            foreach ($voice as $vo){
-                $this->save($vo);
+            foreach ($voice as $key=>$vo){
+                $this->save($key.'test.wav',$vo);
             }
         }
 
@@ -131,9 +131,9 @@ class Voice
     }
 
 
-    private function save($data)
+    private function save($filename,$data)
     {
-        file_put_contents(time() .'test.wav',$data);
+        file_put_contents($filename,$data);
     }
 
     /**
