@@ -61,8 +61,6 @@ class Voice
             }
         }
 
-//        return $this->stringToVoice($header,$string);
-
     }
 
     /**
@@ -82,7 +80,7 @@ class Voice
 
             foreach ($string as $str){
                 $voice[] = $this->httpPost($header,$str);
-                sleep(1);
+                //sleep(1);
             }
             return $voice;
         }
