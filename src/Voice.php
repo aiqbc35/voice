@@ -19,6 +19,9 @@ class Voice
 
     private $text_type = 'text';  //文本类型
 
+    public $appid = null;  //appid
+    public $apiKey = null;
+
     public function getVoice()
     {
         $header = $this->getHttpRequestHeader();
@@ -37,7 +40,10 @@ class Voice
             'engine_type' => $this->engine_type,
             'text_type' => $this->text_type
         ];
+
         $httpRequestHeader = new HttpRequestHeader();
+        $httpRequestHeader->setAppId($this->appid);
+        $httpRequestHeader->setApiKey($this->apiKey);
         return $httpRequestHeader->getHttpHeader($param);
     }
 

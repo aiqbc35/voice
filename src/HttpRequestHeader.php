@@ -15,7 +15,7 @@ class HttpRequestHeader
     /**
      * @param mixed $apiKey
      */
-    public static function setApiKey($apiKey)
+    public function setApiKey($apiKey)
     {
         self::$apiKey = $apiKey;
     }
@@ -38,14 +38,14 @@ class HttpRequestHeader
 
         $checksum = $this->checkSum();
 
-        return $data = [
+        return json_encode([
             'X-CurTime' => self::$time,
             'X-Param' => self::$param,
             'X-Appid' => self::$appId,
             'X-CheckSum' => $checksum,
             'X-Real-Ip' => $this->getServerIp(),
             'Content-Type' => 'application/x-www-form-urlencoded; charset=utf-8'
-        ];
+        ]);
     }
 
     /**
@@ -95,7 +95,7 @@ class HttpRequestHeader
      * 赋值APPI
      * @param mixed $appId
      */
-    public static function setAppId($appId)
+    public function setAppId($appId)
     {
         self::$appId = $appId;
     }

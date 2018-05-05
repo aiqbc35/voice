@@ -25,7 +25,7 @@ class ComposerStaticInitc172cabac6f5f10199b4e093c73981a9
         ),
         'R' => 
         array (
-            'ROOKIEVOICE\\' => 12,
+            'RookieVoice\\' => 12,
         ),
         'P' => 
         array (
@@ -50,9 +50,9 @@ class ComposerStaticInitc172cabac6f5f10199b4e093c73981a9
         array (
             0 => __DIR__ . '/..' . '/symfony/var-dumper',
         ),
-        'ROOKIEVOICE\\' => 
+        'RookieVoice\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/',
+            0 => __DIR__ . '/../..' . '/src',
         ),
         'Psr\\Log\\' => 
         array (
