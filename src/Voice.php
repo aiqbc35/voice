@@ -48,6 +48,8 @@ class Voice
             return $this->errorMsg;
         }
 
+        dump($string);die;
+
         $voice = $this->stringToVoice($header,$string);
 
         if(is_string($voice)){
