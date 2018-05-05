@@ -5,7 +5,7 @@ class Voice
 {
     private $auf = 'audio/L16;rate=16000';   //音频采样率
 
-    private $aue = 'raw';    //音频编码 可选值：raw（未压缩的pcm或wav格式），lame（mp3格式）
+    public $aue = 'raw';    //音频编码 可选值：raw（未压缩的pcm或wav格式），lame（mp3格式）
 
     public $voice_name = 'xiaoyan';  //发音人
 

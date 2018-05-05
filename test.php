@@ -44,4 +44,3 @@ function save($fileName,$data)
 {
     file_put_contents($fileName,$data);
 }
-dump($result);
