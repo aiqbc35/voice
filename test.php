@@ -16,4 +16,4 @@ if (DEBUG) {
 $voice = new \RookieVoice\Voice();
 $voice->appid = '5ad999e2';
 $voice->apiKey = '1bd14ac49a7a2d5f48836e0ac7045d18';
-$voice->getVoice();
+echo $voice->getVoice();
