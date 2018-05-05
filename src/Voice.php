@@ -26,7 +26,7 @@ class Voice
 
     public function getVoice()
     {
-        $header = $this->getHttpRequestHeader();
+        echo $header = $this->getHttpRequestHeader();
 
         $httpPost = new HttpRequestPost();
         $text = $this->getText();
