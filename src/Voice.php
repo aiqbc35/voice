@@ -48,19 +48,21 @@ class Voice
             return $this->errorMsg;
         }
 
+        return $this->stringToVoice($header,$string);
+    }
 
-        $voice = $this->stringToVoice($header,$string);
+    /**
+     * 音频后缀
+     * @return string
+     */
+    public function suffix()
+    {
+        $suffix = '.wav';
 
-        if(is_string($voice)){
-            $this->save($voice);
+        if ($this->aue == 'lame') {
+            $suffix = '.mp3';
         }
-
-        if (is_array($voice)) {
-            foreach ($voice as $key=>$vo){
-                $this->save($key.'test.wav',$vo);
-            }
-        }
-
+        return $suffix;
     }
 
     /**
@@ -80,7 +82,6 @@ class Voice
 
             foreach ($string as $str){
                 $voice[] = $this->httpPost($header,$str);
-                //sleep(1);
             }
             return $voice;
         }
@@ -126,12 +127,6 @@ class Voice
             return false;
         }
         return $result;
-    }
-
-
-    private function save($filename,$data)
-    {
-        file_put_contents($filename,$data);
     }
 
     /**

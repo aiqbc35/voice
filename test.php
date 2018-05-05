@@ -22,4 +22,26 @@ $voice->apiKey = '1bd14ac49a7a2d5f48836e0ac7045d18';
 $voice->isnum = 2;
 $result = $voice->getVoice($str);
 
+
+if ($voice->errorMsg) {
+    dump($voice->errorMsg);
+}
+
+$suffix = $voice->suffix();
+
+if (is_string($result)) {
+    save(time() . $suffix,$result);
+}
+
+if (is_array($result)) {
+    foreach ($result as $key=>$vo){
+        save(time() . '_' .$key .$suffix,$vo);
+    }
+}
+
+
+function save($fileName,$data)
+{
+    file_put_contents($fileName,$data);
+}
 dump($result);
