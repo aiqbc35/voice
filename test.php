@@ -19,6 +19,7 @@ $str = '原来的我可以穿漂亮的白裙子，画着淡淡的妆，当婉转
 $voice = new \RookieVoice\Voice();
 $voice->appid = '5ad999e2';
 $voice->apiKey = '1bd14ac49a7a2d5f48836e0ac7045d18';
+$voice->isnum = 2;
 $result = $voice->getVoice($str);
 
 dump($result);
