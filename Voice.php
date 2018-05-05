@@ -1,7 +1,8 @@
 <?php
 namespace ROOKIE\VOICE;
 
-use ROOKIE\VOICE\APP\HttpRequestHeader;
+
+use ROOKIE\VOICE\Src\HttpRequestHeader;
 
 require "./vendor/autoload.php";
 
