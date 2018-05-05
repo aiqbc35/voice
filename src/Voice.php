@@ -24,21 +24,32 @@ class Voice
 
     private static $apiUrl = 'http://api.xfyun.cn/v1/service/v1/tts';
 
+    private $savePath = '/voice';
+
     public function getVoice()
     {
         $header = $this->getHttpRequestHeader();
 
         $httpPost = new HttpRequestPost();
         $text = $this->getText();
-        $result = $httpPost->post($header,self::$apiUrl,"text=this is test");
-        dump($result);
+        $result = $httpPost->post($header,self::$apiUrl,$text);
+
+        $voice = json_decode($result);
+
+        if(isset($voice->code)){
+            return $result;
+        }
+        $this->save($result);
+    }
+
+    private function save($data)
+    {
+        file_put_contents('test.wav',$data);
     }
 
     private function getText()
     {
-        return json_encode([
-            'text' => '这里是语音测试！'
-        ],JSON_UNESCAPED_UNICODE);
+        return "text=这里是语音测试！";
     }
 
     private function getHttpRequestHeader()
