@@ -57,7 +57,7 @@ class HttpRequestString
         }
 
         if ($this->length > self::XUNFEILENGTH && $this->isNum == 1) {
-            return substr($text,0,self::XUNFEILENGTH);
+            return "text=" . substr($text,0,self::XUNFEILENGTH);
         }
 
         if ($this->isNum > 1) {
@@ -77,7 +77,7 @@ class HttpRequestString
         $text = self::$text;
 
         for ( $i=0; $i<$this->isNum; $i++ ){
-            $str[] = substr($text,($star * $i),$star);
+            $str[] = "text=" . substr($text,($star * $i),$star);
         }
         return $str;
     }
