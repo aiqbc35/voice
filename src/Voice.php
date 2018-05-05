@@ -22,10 +22,23 @@ class Voice
     public $appid = null;  //appid
     public $apiKey = null;
 
+    private static $apiUrl = 'http://api.xfyun.cn/v1/service/v1/tts';
+
     public function getVoice()
     {
         $header = $this->getHttpRequestHeader();
-        dump($header);
+
+        $httpPost = new HttpRequestPost();
+        $text = $this->getText();
+        $result = $httpPost->post($header,self::$apiUrl,"text=this is test");
+        dump($result);
+    }
+
+    private function getText()
+    {
+        return json_encode([
+            'text' => '这里是语音测试！'
+        ],JSON_UNESCAPED_UNICODE);
     }
 
     private function getHttpRequestHeader()

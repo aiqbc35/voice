@@ -37,15 +37,15 @@ class HttpRequestHeader
         }
 
         $checksum = $this->checkSum();
+        $header = [];
+        $header[] = 'X-CurTime:'.self::$time;
+        $header[] = 'X-Param:'.self::$param;
+        $header[] = 'X-Appid:'.self::$appId;
+        $header[] = 'X-CheckSum:'.$checksum;
+        $header[] = 'X-Real-Ip:'.$this->getServerIp();
+        $header[] = 'Content-Type:application/x-www-form-urlencoded; charset=utf-8';
 
-        return json_encode([
-            'X-CurTime' => self::$time,
-            'X-Param' => self::$param,
-            'X-Appid' => self::$appId,
-            'X-CheckSum' => $checksum,
-            'X-Real-Ip' => $this->getServerIp(),
-            'Content-Type' => 'application/x-www-form-urlencoded; charset=utf-8'
-        ]);
+        return $header;
     }
 
     /**
