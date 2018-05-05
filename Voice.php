@@ -5,6 +5,16 @@ use ROOKIE\VOICE\APP\HttpRequestHeader;
 
 require "./vendor/autoload.php";
 
+
+$whoops = new \Whoops\Run;
+$optionTitle = "框架出错了";
+$option = new \Whoops\Handler\PrettyPageHandler();
+$option->setPageTitle($optionTitle);
+$whoops->pushHandler($option);
+$whoops->register();
+ini_set('display_errors','on');
+
+
 class Voice
 {
     private $auf = 'audio/L16;rate=16000';   //音频采样率
