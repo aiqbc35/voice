@@ -1,6 +1,6 @@
 <?php
 
-namespace ROOKIE\VOICE\Src;
+namespace RookieVoice;
 
 
 class HttpRequestHeader

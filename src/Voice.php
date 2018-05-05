@@ -1,20 +1,5 @@
 <?php
-namespace ROOKIE\VOICE;
-
-
-use ROOKIE\VOICE\Src\HttpRequestHeader;
-
-require "./vendor/autoload.php";
-
-
-$whoops = new \Whoops\Run;
-$optionTitle = "框架出错了";
-$option = new \Whoops\Handler\PrettyPageHandler();
-$option->setPageTitle($optionTitle);
-$whoops->pushHandler($option);
-$whoops->register();
-ini_set('display_errors','on');
-
+namespace RookieVoice;
 
 class Voice
 {
@@ -43,7 +28,7 @@ class Voice
     private function getHttpRequestHeader()
     {
         $param = [
-            'auf' => $this->aue,
+            'auf' => $this->auf,
             'aue' => $this->aue,
             'voice_name' => $this->voice_name,
             'speed' => $this->speed,
@@ -72,7 +57,5 @@ class Voice
 
 }
 
-$voice = new Voice();
-$voice->getVoice();
 
 
