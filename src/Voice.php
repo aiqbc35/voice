@@ -15,7 +15,7 @@ class Voice
 
     public $pitch = '50'; //音高，可选值：[0-100]，默认为50
 
-    public $engine_type = 'x';  //引擎类型，可选值：aisound（普通效果），intp65（中文），intp65_en（英文），mtts（小语种，需配合小语种发音人使用），x（优化效果），默认为inpt65
+    public $engine_type = 'intp65';  //引擎类型，可选值：aisound（普通效果），intp65（中文），intp65_en（英文），mtts（小语种，需配合小语种发音人使用），x（优化效果），默认为inpt65
 
     private $text_type = 'text';  //文本类型
 
@@ -24,45 +24,121 @@ class Voice
 
     private static $apiUrl = 'http://api.xfyun.cn/v1/service/v1/tts';
 
+    public $isnum = 1; //语音条数
 
-    public function getVoice()
+    public $errorMsg = ''; //错误信息
+
+
+    public function getVoice($str)
     {
 
-        $str = '原来的我可以穿漂亮的白裙子，画着淡淡的妆，当婉转的《茉莉花》音乐响起我在舞台中央翩翩起舞，仿佛整个世界上只有我一个人。舞蹈队里的姐妹们都说我就像一朵美丽茉莉花，也只有我能够把那支舞蹈演绎的那么优雅动人。那时候的我是有多么的骄傲，我活在一个充满鲜花和掌声的世界里，而且我还有一个非常爱我的男朋友，让我觉得我所有的付出都是值得。他每天都像公主一样宠着我，任我撒娇淘气，无理取闹。每次我训练完舞蹈，他都会骑着单车来我训练的地方接我。坐在他骑着的单车上，环着他的腰把脸贴在他的背上，听他均匀的心跳声，我感到无比的踏实。夕阳照在我们身上，在地上留下一道长长的影子。我的头发随着风飞扬舞动，像我在舞台上一样轻盈，还有我长长的白裙子,我依偎在他的怀里，他把下巴轻轻地放在我的头顶';
-
+        if(empty($str)){
+            return 'text not empty';
+        }
 
         $header = $this->getHttpRequestHeader();
 
+        if (is_string($header)) {
+            return $header;
+        }
+
+        $string = $this->getString($str);
+
+        if ($string == false) {
+            return $this->errorMsg;
+        }
+
+        $voice = $this->stringToVoice($header,$string);
+
+        if(is_string($voice)){
+            $this->save($voice);
+        }
+
+        if (is_array($voice)) {
+            foreach ($voice as $vo){
+                $this->save($vo);
+            }
+        }
+
+//        return $this->stringToVoice($header,$string);
+
+    }
+
+    /**
+     * 文字转语音
+     * @param $header http request header
+     * @param $string 语音文本
+     * @return array|bool|mixed
+     */
+    private function stringToVoice($header,$string)
+    {
+        if($this->isnum == 1 && is_string($string)){
+            return $this->httpPost($header,$string);
+        }
+        if ($this->isnum > 1 && is_array($string)){
+
+            $voice = array();
+
+            foreach ($string as $str){
+                $voice[] = $this->httpPost($header,$str);
+                sleep(1);
+            }
+            return $voice;
+        }
+        return false;
+    }
+
+
+    /**
+     * 处理文字
+     * @param $str
+     * @return array|bool|string
+     */
+    private function getString($str)
+    {
+        $string = new HttpRequestString();
+        $string->setIsNum($this->isnum);
+        $text = $string->getText($str);
+
+        if ($text == false){
+            $this->errorMsg = $string->errorMsg;
+            return false;
+        }
+
+        return $text;
+    }
+
+    /**
+     * 对接接口
+     * @param array $header http request header
+     * @param string $text 语音文字
+     * @return bool|mixed
+     */
+    private function httpPost($header,$text)
+    {
         $httpPost = new HttpRequestPost();
-
-//        $string = new HttpRequestString();
-//        $text = $string->getText($str);
-//        dump($text);
-//
-//        die;
-
-        $text = $this->getText($str);
 
         $result = $httpPost->post($header,self::$apiUrl,$text);
 
         $voice = json_decode($result);
 
         if(isset($voice->code)){
-            return $result;
+            $this->errorMsg = $result;
+            return false;
         }
-        $this->save($result);
+        return $result;
     }
+
 
     private function save($data)
     {
-        file_put_contents('test.wav',$data);
+        file_put_contents(time() .'test.wav',$data);
     }
 
-    private function getText($data)
-    {
-        return "text=".$data;
-    }
-
+    /**
+     * 获取Header
+     * @return array|string
+     */
     private function getHttpRequestHeader()
     {
         $param = [
