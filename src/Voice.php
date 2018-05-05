@@ -53,9 +53,14 @@ class Voice
         $this->save($result);
     }
 
-    private function getText()
+    private function save($data)
     {
-        return "text=这里是语音测试！";
+        file_put_contents('test.wav',$data);
+    }
+
+    private function getText($data)
+    {
+        return "text=".$data;
     }
 
     private function getHttpRequestHeader()
