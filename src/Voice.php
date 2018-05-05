@@ -37,7 +37,7 @@ class Voice
         $voice = json_decode($result);
 
         if(isset($voice->code)){
-            return $result;
+            echo $result;
         }
         $this->save($result);
     }
