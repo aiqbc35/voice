@@ -75,6 +75,7 @@ class Voice
     {
         if($this->isnum == 1 && is_string($string)){
             $vo = $this->httpPost($header,$string);
+            echo $this->errorMsg;
             dump($vo);die;
         }
         if ($this->isnum > 1 && is_array($string)){
