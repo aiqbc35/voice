@@ -48,7 +48,6 @@ class Voice
             return $this->errorMsg;
         }
 
-        dump($string);die;
 
         $voice = $this->stringToVoice($header,$string);
 
@@ -75,7 +74,8 @@ class Voice
     private function stringToVoice($header,$string)
     {
         if($this->isnum == 1 && is_string($string)){
-            return $this->httpPost($header,$string);
+            $vo = $this->httpPost($header,$string);
+            dump($vo);die;
         }
         if ($this->isnum > 1 && is_array($string)){
 
