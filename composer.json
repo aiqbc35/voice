@@ -1,11 +1,6 @@
 {
     "name": "rookie/voiceclude",
-    "require": {
-        "filp/whoops":"*"
-    },
-    "require-dev":{
-        "symfony/var-dumper":"*"
-    },
+    "require": {},
     "autoload":{
         "psr-4":{
             "RookieVoice\\":"src/"
