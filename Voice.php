@@ -1,6 +1,8 @@
 <?php
 namespace ROOKIE\VOICE;
 
+use ROOKIE\VOICE\APP\HttpRequestHeader;
+
 require "./vendor/autoload.php";
 
 class Voice
@@ -23,9 +25,8 @@ class Voice
 
     public function getVoice()
     {
-        echo $host = $_SERVER['HTTP_HOST'];
-        echo "<hr />";
-        echo gethostbyname($host);
+        $header = $this->getHttpRequestHeader();
+        dump($header);
     }
 
     private function getHttpRequestHeader()
@@ -40,7 +41,8 @@ class Voice
             'engine_type' => $this->engine_type,
             'text_type' => $this->text_type
         ];
-
+        $httpRequestHeader = new HttpRequestHeader();
+        return $httpRequestHeader->getHttpHeader($param);
     }
 
     public function __get($name)

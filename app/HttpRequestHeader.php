@@ -21,7 +21,11 @@ class HttpRequestHeader
     }
 
 
-
+    /**
+     * 抛出HEADER信息
+     * @param $param
+     * @return array|null
+     */
     public function getHttpHeader($param)
     {
         $this->setCurTime();
@@ -34,12 +38,13 @@ class HttpRequestHeader
 
         $checksum = $this->checkSum();
 
-        $data = [
+        return $data = [
             'X-CurTime' => self::$time,
             'X-Param' => self::$param,
             'X-Appid' => self::$appId,
             'X-CheckSum' => $checksum,
-            'X-Real-Ip' => ''
+            'X-Real-Ip' => $this->getServerIp(),
+            'Content-Type' => 'application/x-www-form-urlencoded; charset=utf-8'
         ];
     }
 
@@ -52,7 +57,15 @@ class HttpRequestHeader
         return md5(self::$apiKey . self::$time . self::$param);
     }
 
-
+    /**
+     * 获取服务器IP
+     * @return string
+     */
+    private function getServerIp()
+    {
+        $host = $_SERVER['HTTP_HOST'];
+        return gethostbyname($host);
+    }
 
     /**
      * 检查相关参数
